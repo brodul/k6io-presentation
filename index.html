@@ -8,7 +8,8 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/simple.css">
+        <link rel="stylesheet" href="brodul.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,8 +17,25 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
+				<section>Slide 1
+                
+  <aside class="notes">
+    Shhh, these are your private notes 📝
+  </aside>
+                </section>
 				<section>Slide 2</section>
+                <section data-markdown>
+                  <textarea data-template>
+                    ## Slide 1
+                    A paragraph with some text and a [link](http://hakim.se).
+                    Note:
+                    This will only display in the notes window.
+                    ---
+                    ## Slide 2
+                    ---
+                    ## Slide 3
+                  </textarea>
+                </section>
 			</div>
 		</div>
 
