@@ -147,7 +147,9 @@
                     <section data-markdown>
                         <textarea data-template>
                     ### Zerg rush ...
-                    `k6 run my_messages.js --vus 20 --duration 10s`
+                    `k6 run my_messages.js`
+                            
+                    `--vus 20 --duration 10s`
                         </textarea>
                     </section>
                 
@@ -160,20 +162,24 @@
                 
                     <section data-markdown>
                     <textarea data-template>
-                    ### Other features 1
+                    ### Other features
                     - Multiple scenarios in one run
                     - Ramping up virtual users
-                    - Set thresholds when to pass
+                    - Set thresholds (codify your SLOs)
                     - Fancy graphs / JSON output
+
+                    Notes:
+                        - 95% of requests have a response time below 200ms
                     ---
-                    ### Other features 2
+                    ### Other features
                     - OpenApi and Postman to script converter
                     - HAR to script converter
                     - WebSockets, HTTP/2 and gRPC support
                     -  ....
                     ---
                     ## @brodul
-                  
+
+                    Thank you
                   </textarea>
                 </section>
 			</div>
