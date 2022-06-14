@@ -1,7 +1,7 @@
 
 body:after {
 content: url(./brodul_logo_small.png);
-filter: opacity(0.05) grayscale(100%) ;
+filter: opacity(0.2) grayscale(100%) ;
 position: fixed;
 bottom: 3.5em;
 left: 3.5em; }

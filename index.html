@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>K6.io stress testing</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/simple.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
         <link rel="stylesheet" href="brodul.css">
 
 		<!-- Theme used for syntax highlighted code -->
@@ -17,23 +17,163 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1
-                
-  <aside class="notes">
-    Shhh, these are your private notes 📝
-  </aside>
-                </section>
-				<section>Slide 2</section>
                 <section data-markdown>
                   <textarea data-template>
-                    ## Slide 1
-                    A paragraph with some text and a [link](http://hakim.se).
+                    ## k6 load testing 
+                    Andraz Brodnik "brodul"
+
+                    ![Alt text](img/logo.PNG)
+                      
                     Note:
                     This will only display in the notes window.
                     ---
-                    ## Slide 2
+                    ![Alt text](img/gatling.jpg)
                     ---
-                    ## Slide 3
+                    ![Alt text](img/locust.jpg)
+                    ---
+                    ![Alt text](img/mountain.jpg)
+                    ---
+                    ![Alt text](img/psyduck.jpg)
+
+                    Note:
+                    - They are all stress test tools
+                    - locust - python
+                    - gattling gun - Java
+                    ---
+                    ![Alt text](img/logo.PNG)
+                    ---
+                    ### What is k6 ?
+                      
+                    - Tool/framework written in Golang
+                    - But configured with Javascript
+                    - We write scenarios that model a user in Javascript
+                    - Then ask k6 to run a lot of Vitual Users (VUs) with that scenario
+                    Notes:
+                    - opensource
+                    - grafana
+                    - cloud pricing
+                    ---
+                    #### Why do we test with k6 like frameworks?
+
+                    - Performance (slow rollout is not possible)
+                    - Performance degredation
+                    - Research (will this stack meet expectations)
+                    - Smoke tests (can a system handle minimal load)
+
+                    Note:
+                    - Big releases: sometimes marketing wants to push a new feature
+                    - dergredation: does release of a feature effect performance for users
+                    - proving SLA/contract
+                    ---
+                    ### Who/what can we simulate?
+
+                    1. Human users using your site 
+                        - Virtual user scenarios
+                        - Humans parse information slower
+                        - Pauses in scenarios
+                    2. Machine talking to your API
+                        - Requests per seconds
+
+                    Note:
+                    - Human emulation useful for applications (ecommerce)
+                    - API 
+                    - Bussiness owners/ stack holders dont care about RPS
+
+                    ---
+                    ### Basic scenario - basic.js
+
+                    ```javascript
+                    import http from 'k6/http';
+                    import { sleep } from 'k6';
+                    export default function () {
+                      http.get('http://test.k6.io');
+                      sleep(1);
+                    }
+                    ```
+                    ---
+                    ### Hello world
+
+                    ```bash
+                    k6 run basic.js
+                    ```
+                  </textarea>
+                </section>
+                <section data-background-color="black">
+                    <video data-autoplay>
+  <source src="img/basic.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+                </section>
+
+                      
+                <section data-markdown>
+                  <textarea data-template>
+                    ### Demo app
+                    my_messages.php
+                    ---
+                    ![Alt text](img/login.jpg)
+                    ---
+                    ![Alt text](img/table.jpg)
+                    ---
+                    ### Scenario 2 - my_messages.js
+                    ```javascript
+                    import http from 'k6/http';
+                    import { sleep, check } from 'k6';
+                    export default function () {
+                      let res = http.get('https://test.k6.io/my_messages.php');
+                      sleep(1);
+                      res = res.submitForm({
+                        formSelector: 'form',
+                        fields: { login: 'admin', password: '123' },
+                      });
+                      check(res, {
+                        'is status 200': (r) => r.status === 200,
+                        'is hello text': (r) => r.body.includes('Welcome, admin!')
+                      });
+                      sleep(1)
+                    }
+                    ```
+                    ---
+                    ### Lets run it ...
+                    `k6 run my_messages.js`
+                    </textarea>
+                    </section>
+                    <section data-background-color="black">
+                        <video data-autoplay>
+                        <source src="img/a1.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+                    ### Zerg rush ...
+                    `k6 run my_messages.js --vus 20 --duration 10s`
+                        </textarea>
+                    </section>
+                
+                    <section data-background-color="black">
+                        <video data-autoplay>
+                        <source src="img/a2.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                    </section>
+                
+                    <section data-markdown>
+                    <textarea data-template>
+                    ### Other features 1
+                    - Multiple scenarios in one run
+                    - Ramping up virtual users
+                    - Set thresholds when to pass
+                    - Fancy graphs / JSON output
+                    ---
+                    ### Other features 2
+                    - OpenApi and Postman to script converter
+                    - HAR to script converter
+                    - WebSockets, HTTP/2 and gRPC support
+                    -  ....
+                    ---
+                    ## @brodul
+                  
                   </textarea>
                 </section>
 			</div>
